@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './Filter.module.css'
 
-function Filter({ filter, onChange }) {
+export function Filter({ filter, onChange }) {
   return (
     <div className={css.Container}>
       <h3 className={css.Subtitle}>Find contacts by name</h3>
@@ -15,4 +15,3 @@ Filter.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default Filter;

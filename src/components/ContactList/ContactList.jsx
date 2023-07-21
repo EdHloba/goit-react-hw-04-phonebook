@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './ContactList.module.css';
 
-function ContactList({ contacts, onClick }) {
+export function ContactList ({ contacts, onClick }) {
   return (
     <ul className={css.List}>
       {contacts.map(contact => (
@@ -13,7 +13,7 @@ function ContactList({ contacts, onClick }) {
             className={css.Button}
             type="button"
             id={contact.id}
-            onClick={onClick}
+            onClick={() => onClick(contact.id)}
           >
             Delete
           </button>
@@ -22,6 +22,7 @@ function ContactList({ contacts, onClick }) {
     </ul>
   );
 }
+
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -34,4 +35,3 @@ ContactList.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default ContactList;
