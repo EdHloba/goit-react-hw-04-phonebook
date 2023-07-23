@@ -8,10 +8,11 @@ import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 
 import css from './Phonebook.module.css';
-import initialValues from '../../data/contacts.json';
 
 export const Phonebook = () => {
-  const [contacts, setContacts] = useState(initialValues);
+  const [contacts, setContacts] = useState(() => {
+    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
+  });
   const [filter, setFilter] = useState('');
 
   const handleSubmit = (values) => {
@@ -22,6 +23,10 @@ export const Phonebook = () => {
     }
     setContacts(prevContacts => prevContacts.concat({ ...values, id: nanoid() }))
   }
+
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const changeFilter = evt => {
     setFilter(evt.target.value);
@@ -40,17 +45,7 @@ const deleteContact = (contactId) => {
     setContacts(prev => prev.filter(contact => contact.id !== contactId))
   };
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
-  useEffect(() => {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
 
   return (
     <>
